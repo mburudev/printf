@@ -26,7 +26,7 @@ int _printf(const char *format, ...)
 		}
 		if (*format == '%' && *(format + 1) != '\0')
 		{
-			format++;
+			*format++;
 			if (format == 'c')
 			{
 				c = va_arg(params, int);
