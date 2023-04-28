@@ -11,7 +11,6 @@
 
 int _printf(const char *format, ...)
 {
-	int c;
 	int count = 0;
 	va_list params;
 
@@ -29,7 +28,8 @@ int _printf(const char *format, ...)
 			format++;
 			if (*format == 'c')
 			{
-				c = va_arg(params, int);
+				char c = (char)va_arg(params, int);
+
 				putchar(c);
 				count++;
 			}
