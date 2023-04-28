@@ -11,6 +11,7 @@
 
 int _printf(const char *format, ...)
 {
+	int c;
 	int count = 0;
 	va_list params;
 
@@ -21,6 +22,12 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			putchar('%');
+			count++;
+		}
+		if (*format == '%' && *(format + 1) == 'c')
+		{
+			c = va_arg(params, int);
+			putchar(c);
 			count++;
 		}
 	}
