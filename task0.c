@@ -34,6 +34,12 @@ int _printf(const char *format, ...)
 			putchar('%');
 			count++;
 		}
+		else
+		{
+			putchar(*format);
+			count++;
+		}
+		format++;
 	}
 	va_end(args);
 	return (count);
