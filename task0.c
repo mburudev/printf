@@ -24,11 +24,15 @@ int _printf(const char *format, ...)
 			putchar('%');
 			count++;
 		}
-		if (*format == '%' && *(format + 1) == 'c')
+		if (*format == '%' && *(format + 1) != '\0')
 		{
-			c = va_arg(params, int);
-			putchar(c);
-			count++;
+			format++;
+			if (format == 'c')
+			{
+				c = va_arg(params, int);
+				putchar(c);
+				count++;
+			}
 		}
 	}
 	return (count);
