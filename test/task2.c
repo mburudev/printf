@@ -19,12 +19,12 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			format++;
+			format++; /* skip the '%' */
 			if (*format == 'b')
 			{
 				unsigned int value = va_arg(args, unsigned int);
-
-				for (int i = 31; i >= 0; i--)
+				/* convert the value to binary and print it */
+				for (i = 31; i >= 0; i--)
 				{
 					putchar((value & (1 << i)) ? '1' : '0');
 					count++;
