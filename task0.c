@@ -19,7 +19,7 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format == 'd')
+			if (*format == 'c')
 			{
 				char c = (char)va_arg(args, int);
 
