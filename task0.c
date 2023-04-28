@@ -8,14 +8,12 @@
  * @format: a character string
  * Return: 0
  */
-
 int _printf(const char *format, ...)
 {
 	int count = 0;
 	va_list args;
 
 	va_start(args, format);
-
 	while (*format != '\0')
 	{
 		if (*format == '%')
@@ -27,19 +25,19 @@ int _printf(const char *format, ...)
 
 				putchar(c);
 				count++;
-			}
-		} else if (*format == '%')
-		{
-			putchar('%');
-			count++;
-		} else if (*format == 's')
-		{
-			char *s = va_arg(args, char *);
-
-			while (*s != '\0')
+			} else if (*format == 's')
 			{
-				putchar(*s);
-				s++;
+				char *s = va_arg(args, char *);
+
+				while (*s != '\0')
+				{
+					putchar(*s);
+					s++;
+					count++;
+				}
+			} else if (*format == '%')
+			{
+				putchar('%');
 				count++;
 			}
 		} else
@@ -49,6 +47,7 @@ int _printf(const char *format, ...)
 		}
 		format++;
 	}
+
 	va_end(args);
 	return (count);
 }
