@@ -28,13 +28,21 @@ int _printf(const char *format, ...)
 				putchar(c);
 				count++;
 			}
-		}
-		else if (*format == '%')
+		} else if (*format == '%')
 		{
 			putchar('%');
 			count++;
-		}
-		else
+		} else if (*format == 's')
+		{
+			char *s = va_arg(args, char *);
+
+			while (*s != '\0')
+			{
+				putchar(*s);
+				s++;
+				count++;
+			}
+		} else
 		{
 			putchar(*format);
 			count++;
