@@ -8,44 +8,29 @@
  * @format: a character string
  * Return: 0
  */
-
 int _printf(const char *format, ...)
 {
-	int count = 0;
 	va_list args;
+	int count = 0;
 
 	va_start(args, format);
-	while (*format != '\0')
+	while (*format)
 	{
 		if (*format == '%')
 		{
-			format++;
-			if (*format == 'd')
+			format++; /* skip the '%' */
+			if (*format == 'b')
 			{
-				char c = (char)va_arg(args, int);
-
-				putchar(c);
-				count++;
-			} else if (*format == 's')
-			{
-				char *s = va_arg(args, char *);
-
-				while (*s != '\0')
+				unsigned int value = va_arg(args, unsigned int);
+				/* convert the value to binary and print it */
+				for (int i = 31; i >= 0; i--)
 				{
-					putchar(*s);
-					s++;
+					putchar((value & (1 << i)) ? '1' : '0');
 					count++;
 				}
-			} else if (*format == '%')
-			{
-				putchar('%');
-				count++;
-			} else
-			{
-				putchar('?');
-				count++;
 			}
-		} else
+		}
+		else
 		{
 			putchar(*format);
 			count++;
@@ -53,5 +38,6 @@ int _printf(const char *format, ...)
 		format++;
 	}
 	va_end(args);
+
 	return (count);
 }
