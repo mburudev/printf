@@ -20,6 +20,11 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
+			putchar('%');
+			count++;
+		}
+		if (*format == '%')
+		{
 			format++;
 			if (*format == 'c')
 			{
