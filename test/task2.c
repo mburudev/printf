@@ -11,8 +11,10 @@
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int i;
 	int count = 0;
+	int i;
+	int output;
+	int binary[32];
 
 	va_start(args, format);
 	while (*format)
@@ -24,11 +26,15 @@ int _printf(const char *format, ...)
 			{
 				unsigned int value = va_arg(args, unsigned int);
 				/* convert the value to binary and print it */
-				for (i = 31; i >= 0; i--)
-				{
-					putchar((value & (1 << i)) ? '1' : '0');
+					for (i = 0; value > 0; i++) {
+     					   binary[i] = value % 2;
+    				    value = value / 2;
+    						}
+					    for (i = i - 1; i >= 0; i--) {
+        output = putchar(binary[i] + '0');
+    }
 					count++;
-				}
+		
 			}
 		}
 		else
@@ -40,5 +46,5 @@ int _printf(const char *format, ...)
 	}
 	va_end(args);
 
-	return (count);
+	return (output);
 }
