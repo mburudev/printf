@@ -19,13 +19,7 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format == 'c')
-			{
-				char c = (char)va_arg(args, int);
-
-				putchar(c);
-				count++;
-			} else if (*format == 's')
+			if (*format == 's')
 			{
 				char *s = va_arg(args, char *);
 
