@@ -4,7 +4,7 @@
 #include "main.h"
 
 /**
- * _printf - outputs according to a string format.
+ * _printf - produces output according to a string format.
  * @format: a character string
  * Return: 0
  */
