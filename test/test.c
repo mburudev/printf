@@ -1,7 +1,7 @@
-#include <limits.h>
+
 #include <stdarg.h>
-#include <stdio.h>
-#include "main.h"
+
+
 
 /**
  * _printf - produces output according to a string format.
@@ -19,13 +19,29 @@ int _printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format == 'c')
+			if (*format == 's')
 			{
-				char c = (char)va_arg(args, int);
+				char *s = va_arg(args, char *);
 
-				putchar(c);
+				while (*s != '\0')
+				{
+					putchar(*s);
+					s++;
+					count++;
+				}
+			} else if (*format == '%')
+			{
+				putchar('%');
+				count++;
+			} else
+			{
+				putchar('?');
 				count++;
 			}
+		} else
+		{
+			putchar(*format);
+			count++;
 		}
 		format++;
 	}
