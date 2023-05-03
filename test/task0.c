@@ -1,32 +1,41 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include "main.h"
 
 /**
  * _printf - produces output according to a string format.
  * @format: a character string
  * Return: 0
  */
-int _printf(const char *format, ...)
-{
-	int count = 0;
-	va_list args;
+int _printf(const char *format, ...) {
+	char  ch;
+	int count;
+    va_list args;
+    va_start(args, format);
 
-	va_start(args, format);
-	while (*format != '\0')
-	{
-		if (*format == '%')
-		{
-			format++;
-			if (*format == 'd')
-			{
-				printf("%d\n", va_arg(args, int));
-				count++;
-			}
-		}
-		format++;
-	}
-	va_end(args);
-	return (count);
+     count = 0;
+   
+    
+
+    while ((ch = *format++) != '\0') {
+        if (ch == '%') {
+            ch = *format++;
+            switch (ch) {
+                case 'd':
+                case 'i':
+                    count += printf("%d", va_arg(args, int));
+                    break;
+                default:
+                    count += printf("%%%c", ch);
+                    break;
+            }
+        } else {
+            putchar(ch);
+            count++;
+        }
+    }
+
+    va_end(args);
+
+    return count;
 }
