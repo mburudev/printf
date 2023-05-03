@@ -12,7 +12,6 @@ int _printf(const char *format, ...)
 {
 	int count = 0;
 	va_list args;
-	int d;
 
 	va_start(args, format);
 	while (*format != '\0')
@@ -22,23 +21,9 @@ int _printf(const char *format, ...)
 			format++;
 			if (*format == 'd')
 			{
-				d = va_arg(args, int);
-
-				printf("%d", d);
-				count++;
-			} else if (*format == '%')
-			{
-				putchar('%');
-				count++;
-			} else
-			{
-				putchar('?');
+				printf("%d\n", va_arg(args, int));
 				count++;
 			}
-		} else
-		{
-			putchar(*format);
-			count++;
 		}
 		format++;
 	}

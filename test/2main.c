@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "main.h"
 
 /**
@@ -11,13 +10,9 @@
 int main(void)
 {
 	int len, len2;
-	
-	len = _printf("%d", 1024);
-	len2 = printf("%d", 1024);
-	        size_t len1 = strlen(len2);
-		size_t len = strlen(len);
-		 printf("The length of the string is(mine) %zu\n", len);
-		  printf("The length of the string is %zu\n", len2);
+
+	len = _printf("%b", 1024);
+	len2 = printf("10000000000");
 	fflush(stdout);
 	if (len != len2)
 	{
