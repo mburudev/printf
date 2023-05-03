@@ -7,40 +7,28 @@
  * @format: a character string
  * Return: 0
  */
-int _printf(const char *format, ...)
-{
-	int count = 0;
-	va_list args;
-	int d;
+int _printf(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
 
-	va_start(args, format);
-	while (*format != '\0')
-	{
-		if (*format == '%')
-		{
-			format++;
-			if (*format == 'd')
-			{
-				d = va_arg(args, int);
+    int count = 0;
+    char c;
 
-				printf("%d", d);
-				count++;
-			} else if (*format == '%')
-			{
-				putchar('%');
-				count++;
-			} else
-			{
-				putchar('?');
-				count++;
-			}
-		} else
-		{
-			putchar(*format);
-			count++;
-		}
-		format++;
-	}
-	va_end(args);
-	return (count);
+    while ((c = *(format++)) != '\0') {
+        if (c != '%') {
+            putchar(c);
+            count++;
+        } else {
+            c = *(format++);
+            if (c == 'd' || c == 'i') {
+                int value = va_arg(args, int);
+                printf("%d", value);
+                count++;
+            }
+        }
+    }
+
+    va_end(args);
+
+    return count;
 }
