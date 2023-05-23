@@ -6,8 +6,6 @@
  * @format: a character string
  * Return: unsigned int in binary.
  */
-
-
 int _printf(const char *format, ...)
 {
 	va_list args;
@@ -43,6 +41,7 @@ int _printf(const char *format, ...)
 		}
 		format++;
 	}
+
 	va_end(args);
 	return (count);
 }
