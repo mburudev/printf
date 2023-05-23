@@ -1,11 +1,6 @@
-#include <stdarg.h>
 #include <stdio.h>
+#include <stdarg.h>
 
-/**
- * _printf - produces output according to a string format.
- * @format: a character string
- * Return: unsigned int in binary.
- */
 int _printf(const char *format, ...) {
   va_list args;
   int count = 0;

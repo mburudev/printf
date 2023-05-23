@@ -7,51 +7,48 @@
  * Return: unsigned int in binary.
  */
 
-int _printf(const char *format, ...) {
-	int count, i, output;
-	int binary[32];
-	char ch;
+int _printf(const char *format, ...)
+{
     va_list args;
+    int count = 0;
+    char buffer[1024]; 
+
     va_start(args, format);
 
-    count = 0;
-   
-
-    while ((ch = *format++) != '\0') {
-        if (ch == '%') {
-            ch = *format++;
-            switch (ch) {
-                case 'd':
-                case 'i':
-                    count += printf("%d", va_arg(args, int));
+    while (*format != '\0')
+    {
+        if (*format == '%')
+        {
+            if (*(format + 1) == '%')
+            {
+                count += sprintf(buffer, "%%");
+                printf("%s", buffer);
+                format += 2;
+                continue;
+            }
+            switch (*++format)
+            {
+                case 'c':
+                    count += sprintf(buffer, "%c", va_arg(args, int));
+                    printf("%s", buffer);
                     break;
-                case 'b':
-                    {
-                        unsigned int value = va_arg(args, unsigned int);
-
-				for (i = 0; value > 0; i++)
-				{
-					binary[i] = value % 2;
-					value = value / 2;
-				}
-				for (i = i - 1; i >= 0; i--)
-				{
-					output = putchar(binary[i] + '0');
-				}
-				count++;
-                    }
+                case 's':
+                    count += sprintf(buffer, "%s", va_arg(args, char*));
+                    printf("%s", buffer);
                     break;
                 default:
-                    count += printf("%%%c", ch);
+                    count += sprintf(buffer, "%%%c", *format);
+                    printf("%s", buffer);
                     break;
             }
-        } else {
-            putchar(ch);
-            count++;
+        } else
+        {
+            count += sprintf(buffer, "%c", *format);
+            printf("%s", buffer);
         }
+        format++;
     }
 
     va_end(args);
-
-    return output;
+    return count;
 }

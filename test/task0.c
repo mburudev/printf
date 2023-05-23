@@ -1,42 +1,60 @@
-#include <limits.h>
-#include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
 
-/**
- * _printf - produces output according to a string format.
- * @format: a character string
- * Return: 0
- */
-int _printf(const char *format, ...)
-{
-	char  ch;
-	int count;
-	va_list args;
+char* decimalToBinary(unsigned int num) {
+	int i;
+    int bits = sizeof(num) * 8;
+    char* binary = malloc(bits + 1); 
+    if (binary == NULL) {
+        return NULL;
+    }
 
-	va_start(args, format);
-	count = 0;
+    binary[bits] = '\0'; 
+    for (i = bits - 1; i >= 0; i--) {
+        binary[i] = (num & 1) ? '1' : '0';
+        num >>= 1;
+    }
 
-	while ((ch = *format++) != '\0')
-	{
-		if (ch == '%')
-		{
-			ch = *format++;
-			switch (ch)
-			{
-				case 'd':
-				case 'i':
-					count += printf("%d", va_arg(args, int));
-					break;
-				default:
-					count += printf("%%%c", ch);
-					break;
-			}
-		} else
-		{
-			putchar(ch);
-			count++;
-		}
-	}
-	va_end(args);
-	return (count);
+    return binary;
+}
+
+int _printf(const char* format, ...) {
+    va_list args;
+    int count = 0;
+
+    va_start(args, format);
+    while (*format != '\0') {
+        if (*format == '%') {
+            switch (*++format) {
+                case 'c':
+                    count += printf("%c", va_arg(args, int));
+                    break;
+                case 's':
+                    count += printf("%s", va_arg(args, char*));
+                    break;
+                case 'b': {
+                    unsigned int num = va_arg(args, unsigned int);
+                    char* binary = decimalToBinary(num);
+                    if (binary != NULL) {
+                        count += printf("%s", binary);
+                        free(binary);
+                    } else {
+                        count += printf("[Memory Allocation Error]");
+                    }
+                    break;
+                }
+                default:
+                    count += printf("%%%c", *format);
+                    break;
+            }
+        } else {
+            count += printf("%c", *format);
+        }
+        format++;
+    }
+
+    va_end(args);
+
+    return count;
 }
