@@ -27,7 +27,7 @@ int _printf(const char *format, ...)
 				count += printf("%s", va_arg(args, char*));
 				break;
 			default:
-				count += printf("%%%c", *format);
+				count += printf("%%%c", *(format - 1));
 				break;
 			}
 		} else
