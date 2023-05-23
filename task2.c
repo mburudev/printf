@@ -18,22 +18,14 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			switch (*++format)
+			if (*(format + 1) == '%')
 			{
-			case 'c':
-				count += printf("%c", va_arg(args, int));
-				break;
-			case 's':
-				count += printf("%s", va_arg(args, char*));
-				break;
-			default:
-				count += printf("%%%c", *format);
-				break;
+				count += printf("%%");
+				format += 2;
+				continue;
 			}
-		} else
-		{
-			count += printf("%c", *format);
 		}
+		count += printf("%c", *format);
 		format++;
 	}
 	va_end(args);
