@@ -7,6 +7,7 @@
  * Return: unsigned int in binary.
  */
 
+
 int _printf(const char *format, ...)
 {
 	va_list args;
@@ -24,8 +25,22 @@ int _printf(const char *format, ...)
 				format += 2;
 				continue;
 			}
+			switch (*++format)
+			{
+				case 'c':
+					count += printf("%c", va_arg(args, int));
+					break;
+				case 's':
+					count += printf("%s", va_arg(args, char*));
+					break;
+				default:
+					count += printf("%%%c", *format);
+					break;
+			}
+		} else
+		{
+			count += printf("%c", *format);
 		}
-		count += printf("%c", *format);
 		format++;
 	}
 	va_end(args);
